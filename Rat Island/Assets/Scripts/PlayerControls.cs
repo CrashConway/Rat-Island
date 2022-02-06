@@ -41,7 +41,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""e98e7155-b928-4594-aaa9-74e3af6b7540"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 }
