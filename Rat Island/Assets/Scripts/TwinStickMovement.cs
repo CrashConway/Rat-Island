@@ -14,7 +14,7 @@ public class TwinStickMovement : MonoBehaviour
     [SerializeField] float _gamepadRotateSmoothing = 1000f;
 
     [SerializeField] bool isGamepad;
-
+    Animator _animator;
     CharacterController _controller;
 
     Vector2 _movement;
@@ -27,6 +27,7 @@ public class TwinStickMovement : MonoBehaviour
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
         _playerControls = new PlayerControls();
         _playerInput = GetComponent<PlayerInput>();
@@ -47,6 +48,7 @@ public class TwinStickMovement : MonoBehaviour
         HandleInput();
         HandleMovement();
         HandleRotation();
+        UpdateAnimator();
     }
 
     void HandleInput()
@@ -104,5 +106,19 @@ public class TwinStickMovement : MonoBehaviour
     public void OnDeviceChange (PlayerInput deviceInput)
     {
         isGamepad = deviceInput.currentControlScheme.Equals("Gamepad") ? true : false;
+    }
+
+    void UpdateAnimator()
+    {
+        float horizontal = _movement.x;
+        float vertical = _movement.y;
+
+        Vector3 movement = new Vector3(horizontal, 0f, vertical);
+
+        float velocityZ = Vector3.Dot(movement, transform.forward);
+        float velocityX = Vector3.Dot(movement, transform.right);
+
+        _animator.SetFloat("VelocityZ", velocityZ);
+        _animator.SetFloat("VelocityX", velocityX);
     }
 }
